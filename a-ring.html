@@ -139,7 +139,8 @@ p{margin:0;max-width:62ch}
 .ac-in .btn{justify-self:start}
 .ac-in .bigphone{display:inline-block;font:500 var(--step-head)/1 var(--font-display);letter-spacing:-.04em;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:8px}
 .ac-in .bigphone:hover{text-decoration-color:var(--action)}
-.ac .ems-cb{--cb-line:currentColor;--focus:currentColor}
+.ac .ems-cb{--cb-line:transparent;--cb-bg:rgba(255,255,255,.16);--focus:currentColor}
+:root:not([data-theme=dark]) .ac:nth-child(n+4) .ems-cb{--cb-bg:rgba(255,255,255,.55)}
 .ac .ems-cb .chk input{accent-color:var(--ti)}
 .ac-cl{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .ac-cl div{display:grid;gap:6px;align-content:start;font-size:var(--step-small);line-height:1.4}
@@ -161,18 +162,19 @@ p{margin:0;max-width:62ch}
 @media (max-width:1000px){.t{grid-column:span 6}.t.wide,.t.full{grid-column:span 12}}
 @media (max-width:560px){.t,.t.wide,.t.full{grid-column:span 12;min-height:150px}}
 
-/* stats */
+/* stats: четыре плитки на одной сетке */
 .stats{background:var(--bg)}
-.stats-g{display:grid;grid-template-columns:repeat(12,1fr);gap:8px;align-items:start}
-.st{padding:28px;display:flex;flex-direction:column;justify-content:space-between;border-radius:var(--r)}
-.st b{display:block;font:500 var(--step-display)/.9 var(--font-display);letter-spacing:-.05em;font-variant-numeric:tabular-nums}
-.st span{font-size:var(--step-body);max-width:18ch;line-height:1.3}
-.st.a{grid-column:1 / span 6;min-height:70vh;background:var(--panel);color:#fff;justify-content:flex-end;gap:16px;border-top-right-radius:min(55%,340px)}
-.st.b{grid-column:7 / span 3;margin-top:14vh;min-height:44vh;background:var(--field-ink);color:#fff}
-.st.c{grid-column:10 / span 3;margin-top:26vh;min-height:34vh;background:var(--field-sky)}
-.st.d{grid-column:7 / span 6;margin-top:0;min-height:20vh;background:var(--field-blush);flex-direction:row;align-items:flex-end;gap:24px}
-.st.d b{font-size:var(--step-head)}
-@media (max-width:900px){.st.a,.st.b,.st.c,.st.d{grid-column:1 / -1;margin-top:0;min-height:0}.st.a{min-height:56vw}.st{gap:32px;margin-bottom:24px}}
+.stats-g{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:repeat(2,auto);gap:10px}
+.st{padding:clamp(20px,2.4vw,32px);display:flex;flex-direction:column;justify-content:space-between;gap:24px;border-radius:var(--r)}
+.st b{display:block;font:500 clamp(2.75rem,1rem + 5vw,6.5rem)/.9 var(--font-display);letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.st span{font-size:var(--step-body);max-width:22ch;line-height:1.3}
+.st.a{grid-column:1 / span 6;grid-row:1 / span 2;min-height:clamp(320px,38vw,520px);background:var(--panel);color:#fff}
+.st.a{container-type:inline-size}.st.a b{font-size:17.5cqw;white-space:nowrap}
+.st.b{grid-column:7 / span 3;grid-row:1;min-height:clamp(200px,20vw,280px);background:var(--field-ink);color:#fff}
+.st.c{grid-column:10 / span 3;grid-row:1;min-height:clamp(200px,20vw,280px);background:var(--field-sky)}
+.st.d{grid-column:7 / span 6;grid-row:2;min-height:clamp(150px,14vw,200px);background:var(--field-blush);flex-direction:row;align-items:center;justify-content:flex-start;gap:clamp(20px,3vw,40px)}
+.st.d span{max-width:30ch}
+@media (max-width:900px){.stats-g{grid-template-rows:none;gap:16px}.st{justify-content:flex-start;gap:12px}.st.a,.st.b,.st.c,.st.d{grid-column:1 / -1;grid-row:auto;min-height:0}.st.a{min-height:0}.st.b,.st.c{min-height:0}}
 
 /* doctors */
 .docs{background:var(--bg)}
@@ -221,11 +223,14 @@ p{margin:0;max-width:62ch}
 .cl{background:var(--field-sage)}
 .cl-g{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,80px);margin-top:56px}
 @media (max-width:900px){.cl-g{grid-template-columns:1fr}}
-.c-one{display:grid;gap:24px}
-.c-one .pic{width:100%;aspect-ratio:1;border-radius:50%;object-fit:cover;max-width:460px}
+.c-one{display:grid;gap:24px;align-content:start}
+.c-one .tx{display:grid;gap:18px}
+.c-one .acts{display:flex;gap:12px 24px;flex-wrap:wrap;align-items:center}
+.c-one .pic{width:100%;aspect-ratio:16/10;height:auto;border-radius:var(--r);object-fit:cover}
 .c-one h3{font-size:var(--step-statement)}
-.rows{list-style:none;margin:0;padding:0;display:grid;gap:12px;font-size:var(--step-body)}
-.rows li{display:flex;gap:14px}.rows i{flex:none;width:12px;height:12px;border-radius:50%;background:var(--accent);margin-top:.5em}
+.rows{list-style:none;margin:0;padding:0;display:grid;gap:12px;font-size:var(--step-body);line-height:1.4}
+.rows li{display:grid;grid-template-columns:12px 1fr;gap:14px;align-items:start}.rows i{width:12px;height:12px;border-radius:50%;background:var(--accent);margin-top:.45em}
+.rows li.off i{background:#8a948e}.rows li.stt span{font-weight:500}
 .live{display:inline-flex;align-items:center;gap:10px;font-weight:500}
 .live i{width:12px;height:12px;border-radius:50%;background:var(--accent)}
 .live.off i{background:#8a948e}
@@ -417,7 +422,7 @@ p{margin:0;max-width:62ch}
 </footer>
 
 <script src="ems-data.js"></script>
-<script src="shared.js?v=6"></script>
+<script src="shared.js?v=7"></script>
 <script>
 (function(){
   var E=window.EMS,$=function(id){return document.getElementById(id)};
@@ -458,12 +463,12 @@ p{margin:0;max-width:62ch}
 
   /* ---------- способы записи (аккордеон) ---------- */
   var acc=$('acc'),W=E.ways;
-  var hint=['Заявка за минуту, врач-координатор свяжется с вами','8 (812) 777-77-03, круглосуточно','Оставьте номер, перезвоним','Если вы уже авторизованы','Администратор на ресепшен или врач на приёме'];
+  var hint=['Оставьте заявку на сайте','Колл-центр работает круглосуточно','Оставьте номер, перезвоним','Если вы уже авторизованы','Администратор на ресепшен или врач на приёме'];
   function clinicsHtml(){return '<div class="ac-cl">'+E.clinics.map(function(c){return '<div><b>'+c.name+'</b><span>'+c.address+'<br>'+c.district+(c.metro?', '+c.metro:'')+'<br>'+c.hours+'</span><a href="'+c.map+'" target="_blank" rel="noopener">Как добраться</a></div>'}).join('')+'</div>'}
   var bodies=[
     '<p>'+W[0].s+'</p><div><button class="btn" data-book type="button">Записаться на приём</button></div>',
-    '<p>'+W[1].s+'</p><div><a class="bigphone" href="'+E.phoneHref+'">'+E.phone+'</a></div>',
-    '<p>'+W[2].s+' Перезвоним в рабочее время, с 8:00 до 22:00.</p><div data-mount-callback="Жду звонка"></div>',
+    '<p>Администратор подберёт врача и время приёма.</p><div><a class="btn" href="'+E.phoneHref+'">Позвонить '+E.phone+'</a></div>',
+    '<p>Оставьте номер, и мы перезвоним в рабочее время: с 8:00 до 22:00.</p><div data-mount-callback="Жду звонка"></div>',
     '<p>'+W[3].s+'</p><div><a class="btn" href="https://lk.emsclinic.ru/login" target="_blank" rel="noopener">Записаться в личном кабинете</a><p class="small">Чтобы авторизоваться, обратитесь на ресепшен клиники или позвоните '+E.phone+'.</p></div>',
     '<p>'+W[4].s+'</p>'+clinicsHtml()
   ];
@@ -531,9 +536,9 @@ p{margin:0;max-width:62ch}
   /* ---------- клиники ---------- */
   var pics={udelnaya:'udelny-park-panoramio.jpg',pobedy:'saint-petersburg-moskovsky-victory-park.jpg'},alts={udelnaya:'Удельный парк',pobedy:'Московский парк Победы, здание у метро'};
   $('cl-g').innerHTML=E.clinics.map(function(c){
-    return '<article class="c-one"><img class="pic" loading="lazy" src="'+pics[c.id]+'" alt="'+alts[c.id]+'" width="460" height="460"><h3>'+c.name+'</h3><ul class="rows"><li><i></i><span>'+c.address+', Санкт-Петербург<br>'+c.district+(c.metro?', '+c.metro:'')+'</span></li><li><span class="live" data-live="'+c.id+'"></span></li><li><i></i><span>'+c.trauma+'</span></li></ul><div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center"><button class="btn" data-book data-clinic="'+c.id+'" type="button">Записаться сюда</button><a class="btn ghost" href="'+c.map+'" target="_blank" rel="noopener">Как добраться</a></div></article>';
+    return '<article class="c-one"><img class="pic" loading="lazy" src="'+pics[c.id]+'" alt="'+alts[c.id]+'" width="460" height="460"><div class="tx"><h3>'+c.name+'</h3><ul class="rows"><li><i></i><span>'+c.address+'<br>'+c.district+(c.metro?', '+c.metro:'')+'</span></li><li class="stt" data-live="'+c.id+'"><i></i><span></span></li><li><i></i><span>'+c.trauma+'</span></li></ul><div class="acts"><button class="btn" data-book data-clinic="'+c.id+'" type="button">Записаться сюда</button><a class="btn ghost" href="'+c.map+'" target="_blank" rel="noopener">Как добраться</a></div></div></article>';
   }).join('');
-  function live(){[].forEach.call(document.querySelectorAll('[data-live]'),function(el){var s=E.status(el.dataset.live);el.className='live'+(s.open?'':' off');el.innerHTML='<i></i>'+(s.open?'Сейчас открыто, до 22:00':'Сейчас закрыто, откроется в 8:00')})}
+  function live(){[].forEach.call(document.querySelectorAll('[data-live]'),function(el){var s=E.status(el.dataset.live);el.classList.toggle('off',!s.open);el.querySelector('span').textContent=s.open?'Сейчас открыто, до 22:00':'Сейчас закрыто, откроется в 8:00'})}
   live();setInterval(live,30000);
 
   /* ---------- отзыв с портретом врача ---------- */
