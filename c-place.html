@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EMS — семейная клиника в Санкт-Петербурге</title>
+<meta name="description" content="Семейная клиника EMS: две клиники у Удельной и у метро «Парк Победы», 141 врач, травмпункт круглосуточно.">
+<script>try{document.documentElement.setAttribute("data-theme",localStorage.getItem("ems-theme")||"dark")}catch(e){document.documentElement.setAttribute("data-theme","dark")}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&family=Oranienbaum&display=swap" rel="stylesheet">
+<style>
+/* Идея: EMS — это два конкретных места Петербурга: у метро «Парк Победы» и у Удельной.
+   Страница открывается фотографией места, а выбор клиники меняет фото, часы, врачей и статус «открыто». */
+:root{
+  --bg:#12301f; --surface:#194029; --ink:#f1f3ea; --muted:#d3ddd5; --accent:#cfe4d4; --accent-ink:#12301f;
+  --action:#d42a25; --action-ink:#fff; --line:#2f5640; --soft:#22503a; --brand:#cfe4d4; --focus:#cfe4d4;
+  --paper:#f1f3ea; --paper-ink:#12301f;
+  --step-small:clamp(1rem,.97rem + .1vw,1.0625rem);
+  --step-body:clamp(1.0625rem,1rem + .25vw,1.1875rem);
+  --step-lead:clamp(1.375rem,1.1rem + .8vw,1.875rem);
+  --step-head:clamp(2.25rem,1.3rem + 3vw,4.25rem);
+  --step-display:clamp(7rem,3rem + 22vw,22rem);
+  --font:'Manrope',system-ui,sans-serif; --font-display:'Oranienbaum','Times New Roman',serif; --display-weight:400;
+  --radius:999px; --pad:clamp(16px,2.4vw,32px); --r:22px;
+  --glass:rgba(18,48,31,.82); --glass-ink:#f1f3ea; --err:#ffb4ae; --on-brand:#12301f; --hover:rgba(255,255,255,.1);
+  --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='10' viewBox='0 0 16 10'%3E%3Cpath d='M1 1l7 7 7-7' fill='none' stroke='%23f1f3ea' stroke-width='2'/%3E%3C/svg%3E");
+  color-scheme:dark;
+}
+:root[data-theme=light]{
+  --bg:#f3f1e8; --surface:#e7e5d7; --ink:#12301f; --muted:#48604f; --accent:#1d5a3a; --accent-ink:#f1f3ea;
+  --line:#cdd2c1; --soft:#d9dccb; --brand:#1d5a3a; --focus:#1d5a3a; --on-brand:#f1f3ea;
+  --paper:#12301f; --paper-ink:#f1f3ea; --err:#b3261e; --hover:rgba(18,48,31,.08);
+  --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='10' viewBox='0 0 16 10'%3E%3Cpath d='M1 1l7 7 7-7' fill='none' stroke='%2312301f' stroke-width='2'/%3E%3C/svg%3E");
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 var(--step-body)/1.55 var(--font);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit}button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+h1,h2,h3{margin:0;font-family:var(--font-display);font-weight:var(--display-weight);letter-spacing:-.01em;line-height:1}
+h2{font-size:var(--step-head)}
+p{margin:0;max-width:56ch}
+.pad{padding-left:var(--pad);padding-right:var(--pad)}
+.sec{padding-top:clamp(48px,6vw,96px);padding-bottom:clamp(48px,6vw,96px)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:0 32px;border-radius:var(--radius);border:0;background:var(--action);color:var(--action-ink);font:500 var(--step-body)/1 var(--font);text-decoration:none;cursor:pointer;transition:background .2s,transform .2s}
+.btn:hover{background:#b8221d}.btn:active{transform:scale(.97)}
+.btn.line{background:transparent;color:inherit;padding:0;min-height:48px;text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px}
+.btn.line:hover{color:var(--accent);background:transparent}
+.link{background:none;border:0;padding:10px 0;cursor:pointer;color:var(--accent);font:500 var(--step-small) var(--font);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:2px}
+
+/* hero */
+.hero{position:relative}
+.ph{position:relative;height:40svh;min-height:340px;overflow:hidden;background:#0b1c13;border-radius:0 0 calc(var(--r)*1.4) calc(var(--r)*1.4)}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.4s ease,transform 8s ease}
+.ph img.on{opacity:1;transform:scale(1.04)}
+.hdr{position:absolute;left:0;right:0;top:0;z-index:5;display:flex;align-items:center;gap:8px;padding-top:14px;padding-bottom:14px}
+.hdr .logo img{height:52px;width:auto;opacity:1;position:static;transform:none}
+.hdr nav{display:flex;gap:2px;margin-left:auto}
+.hdr nav a,.hdr .ib{padding:10px 14px;border-radius:var(--radius);text-decoration:none;font-size:var(--step-small);font-weight:500;background:var(--glass);color:var(--glass-ink);border:0;cursor:pointer;white-space:nowrap}
+.hdr nav a:hover,.hdr .ib:hover{background:#12301f}
+.hdr .ib{margin-left:4px}
+.burger{display:none!important}
+.tabs{position:absolute;left:var(--pad);bottom:20px;z-index:4;display:flex;gap:8px;flex-wrap:wrap}
+.tab{min-height:52px;padding:0 24px;border-radius:var(--radius);border:0;background:var(--glass);color:var(--glass-ink);font:500 var(--step-body) var(--font);cursor:pointer;display:flex;gap:12px;align-items:center;transition:background .25s,color .25s}
+.tab i{width:12px;height:12px;border-radius:50%;background:#6a8a76}
+.tab.open i{background:#7fe0a6}
+.tab[aria-pressed=true]{background:#f1f3ea;color:#12301f}
+.tab[aria-pressed=true].open i{background:#18823f}
+.band{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--pad);align-items:end;padding-top:20px;padding-bottom:16px}
+.mark{grid-column:1 / span 5;font:400 clamp(6rem,2rem + 13vw,15rem)/.78 var(--font-display);letter-spacing:-.03em;margin:0;transform-origin:left bottom;will-change:transform}
+.side{grid-column:6 / span 7;display:grid;gap:14px;padding-bottom:6px}
+.side .lead{font-size:var(--step-lead);line-height:1.25;font-family:var(--font);letter-spacing:-.02em;max-width:30ch}
+.side .acts{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+.mini{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mc{display:grid;gap:3px;align-content:start;padding:14px 18px;border-radius:var(--r);background:var(--surface);font-size:var(--step-small);line-height:1.35}
+.mc b{font-size:var(--step-body);font-weight:500}
+.mc .live{display:inline-flex;gap:8px;align-items:center;font-weight:500}
+.mc .live i{width:12px;height:12px;border-radius:50%;background:#7fe0a6}
+:root[data-theme=light] .mc .live i,:root[data-theme=light] .place .live i{background:#18823f}
+.mc .live.off i{background:#6a8a76}
+.svcs{padding-top:6px;padding-bottom:6px}
+.svcs .chipset{display:flex;flex-wrap:wrap;gap:8px}
+.svcs .chip{min-height:44px;padding:0 18px;border-color:var(--line);background:var(--surface);border-width:0}
+.svcs .chip:hover{background:var(--soft)}
+.svcs .chip.hot{background:var(--action);color:#fff}
+@media (max-width:900px){.mini{grid-template-columns:1fr}}
+
+/* sticky nav appears after the first screen */
+.sbar{position:fixed;left:0;right:0;top:0;z-index:70;display:flex;align-items:center;gap:6px;padding:8px var(--pad);background:var(--bg);box-shadow:0 8px 30px rgba(0,0,0,.18);transform:translateY(-110%);visibility:hidden;transition:transform .35s cubic-bezier(.3,.7,.2,1),visibility 0s .35s}
+.sbar.show{transform:none;visibility:visible;transition-delay:0s}
+.sbar img{height:40px;width:auto}
+.sbar nav{display:flex;gap:2px;margin-left:16px}
+.sbar nav a,.sbar .ib{padding:10px 12px;border-radius:var(--radius);text-decoration:none;font-size:var(--step-small);font-weight:500;background:none;border:0;cursor:pointer;white-space:nowrap;color:var(--ink)}
+.sbar nav a:hover,.sbar .ib:hover{background:var(--hover)}
+.sbar .sp{margin-left:auto;display:flex;align-items:center;gap:6px}
+.sbar .btn{min-height:44px;padding:0 20px;font-size:var(--step-small)}
+@media (max-width:900px){.sbar nav,.sbar .tel{display:none}}
+
+/* two places (diagonal) */
+.place{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--pad);align-items:center;margin-bottom:clamp(40px,5vw,72px)}
+.place:last-child{margin-bottom:0}
+.place img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:calc(var(--r)*1.4)}
+.place .im{grid-column:1 / span 7}.place .tx{grid-column:9 / span 4;display:grid;gap:20px}
+.place.r .im{grid-column:6 / span 7;order:2}.place.r .tx{grid-column:1 / span 4;order:1}
+.place h3{font-size:var(--step-head)}
+.place .meta{display:grid;gap:6px;font-size:var(--step-body)}
+.place .live{display:inline-flex;gap:10px;align-items:center;font-weight:500}
+.place .live i{width:12px;height:12px;border-radius:50%;background:#7fe0a6}
+.place .live.off i{background:#6a8a76}
+.place .acts{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+.cap{font-size:var(--step-small);color:var(--muted);margin-top:8px}
+
+/* departments with margin photographs */
+.dep h2{margin-bottom:56px;max-width:10em}
+.dep ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.dep li>button>div{min-width:0}
+.dep li button{border-radius:var(--r);overflow:hidden;display:grid;grid-template-columns:160px 1fr auto;gap:var(--pad);align-items:center;width:100%;padding:0;background:var(--surface);border:0;text-align:left;cursor:pointer;color:inherit;transition:background .25s}
+.dep li button:hover{background:var(--soft)}
+.dep li img{width:160px;height:200px;object-fit:cover;object-position:top}
+.dep b{display:block;font:400 var(--step-head)/1 var(--font-display);letter-spacing:-.01em}
+.dep span{display:block;margin-top:10px;font-size:var(--step-body)}
+.dep .go{padding-right:32px;font-weight:500;white-space:nowrap}
+@media (max-width:900px){.dep li button{grid-template-columns:96px 1fr;gap:16px}.dep li img{width:96px;height:132px}.dep .go{display:none}.dep b{font-size:var(--step-lead);overflow-wrap:anywhere}.dep span{font-size:var(--step-small)}}
+
+/* numbers on the photograph's edge */
+.big{position:relative;min-height:64svh;display:flex;align-items:flex-end;overflow:hidden;margin:0 var(--pad);border-radius:calc(var(--r)*1.4);color:#f1f3ea}
+.big>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.big .scrim{position:absolute;inset:0;background:rgba(10,28,18,.5)}
+.big .in{position:relative;width:100%;display:grid;grid-template-columns:repeat(12,1fr);gap:var(--pad);padding-bottom:28px}
+.big .main{grid-column:1 / -1;font:400 clamp(5rem,2rem + 18vw,19rem)/.8 var(--font-display);letter-spacing:-.04em;font-variant-numeric:lining-nums}
+.big .row{grid-column:1 / -1;display:grid;grid-template-columns:repeat(4,1fr);gap:var(--pad);margin-top:28px}
+.big .row div{display:grid;gap:6px}
+.big .row b{font:400 var(--step-head)/1 var(--font-display)}
+.big .row span{font-size:var(--step-body);max-width:22ch;line-height:1.3}
+@media (max-width:700px){.big .row{grid-template-columns:1fr 1fr}}
+
+/* doctors: sticky photo + active list */
+.docs{display:grid;grid-template-columns:5fr 7fr;gap:clamp(24px,5vw,80px);align-items:start}
+.sticky{position:sticky;top:24px;display:grid;gap:14px}
+.sticky .fr{position:relative;aspect-ratio:3/4;background:var(--surface);overflow:hidden;border-radius:var(--r)}
+.sticky img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;transition:opacity .35s}
+.sticky .nm{font:400 var(--step-lead)/1.1 var(--font-display)}
+.sticky .rl{font-size:var(--step-small);color:var(--muted)}
+.docs h2{margin-bottom:32px}
+.d-tools{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;align-items:center}
+.search input,.sel{min-height:56px;border-radius:var(--radius);border:2px solid var(--ink);background:transparent;color:var(--ink);font:400 var(--step-body) var(--font);padding:0 24px}
+.search input{width:min(430px,100%)}
+.search input::placeholder{color:var(--muted)}
+.sel{appearance:none;-webkit-appearance:none;padding-right:44px;cursor:pointer;width:min(100%,340px);background:var(--bg) var(--chev) right 20px center no-repeat}
+.sel option{background:var(--bg);color:var(--ink)}
+.chip{min-height:48px;padding:0 20px;border-radius:var(--radius);border:2px solid var(--line);background:none;cursor:pointer;font:500 var(--step-small) var(--font);transition:background .2s,color .2s}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.dl{display:grid;gap:6px}
+.dr{border-radius:var(--r);display:grid;grid-template-columns:1fr auto;gap:2px 16px;align-items:center;padding:16px 20px;background:var(--surface);cursor:default;transition:background .2s}
+.dr:hover,.dr:focus-within{background:var(--soft)}
+.dr[hidden]{display:none}
+.dr b{font-weight:500;line-height:1.2}
+.dr p{grid-column:1;font-size:var(--step-small);color:var(--muted);line-height:1.35}
+.dr .go{grid-row:1 / span 2;grid-column:2;background:var(--paper);color:var(--paper-ink);border:0;border-radius:var(--radius);min-height:48px;padding:0 20px;font:500 var(--step-small) var(--font);cursor:pointer;transition:background .2s}
+.dr .go:hover{filter:brightness(1.15)}
+.d-empty{color:var(--muted);padding:24px 0}
+.more{margin-top:32px}
+.cn{color:var(--muted);font-size:var(--step-small)}
+@media (max-width:900px){.docs{grid-template-columns:1fr}.sticky{display:none}}
+
+/* menu prices */
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,6vw,96px);margin-top:48px}
+@media (max-width:900px){.menu{grid-template-columns:1fr}}
+.menu h3{font-size:var(--step-lead);margin-bottom:12px}
+.menu ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.menu li button{border-radius:var(--r);display:grid;grid-template-columns:1fr auto;gap:4px 24px;width:100%;padding:16px 20px;background:var(--surface);border:0;text-align:left;cursor:pointer;transition:background .2s}
+.menu li button:hover{background:var(--soft)}
+.menu .pr{font:500 var(--step-lead)/1 var(--font);white-space:nowrap;text-align:right}
+.menu .pr s{display:block;font:400 var(--step-small) var(--font);color:var(--muted);margin-top:4px}
+.untl{margin-top:32px;color:var(--muted)}
+
+/* testimonial */
+.tm{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--pad)}
+.tm .pt{grid-column:2 / span 4}.tm .pt img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;object-position:top;background:var(--surface);border-radius:calc(var(--r)*1.4)}
+.tm .q{grid-column:7 / span 6;margin-top:clamp(40px,8vw,120px)}
+.tm blockquote{margin:0}
+.tm blockquote p:first-child{font:400 var(--step-lead)/1.2 var(--font-display);max-width:20em;letter-spacing:-.005em}
+.tm blockquote p+p{margin-top:20px;font-size:var(--step-body);line-height:1.5}
+.tm cite{display:block;margin-top:28px;font-style:normal}.tm cite span{display:block;color:var(--muted);font-size:var(--step-small)}
+.tm .ctrl{display:flex;gap:10px;align-items:center;margin-top:28px}
+.cb{width:56px;height:56px;border-radius:50%;border:0;background:var(--paper);color:var(--paper-ink);cursor:pointer;display:grid;place-items:center;font-size:1.25rem;transition:background .2s,transform .2s}
+.cb:hover{filter:brightness(1.15)}.cb:active{transform:scale(.94)}
+.tm .n{min-width:60px;text-align:center;color:var(--muted)}
+.fade{animation:fq .6s ease}@keyframes fq{from{opacity:0}}
+.tm .sm{grid-column:10 / span 2;margin-top:48px}.tm .sm img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;border-radius:var(--r)}
+@media (max-width:900px){.tm .pt{grid-column:1 / span 9}.tm .q{grid-column:1 / -1;margin-top:24px}.tm .sm{display:none}}
+
+/* visit card on a photograph */
+.visit{position:relative;display:grid;place-items:center;padding:clamp(32px,6vw,88px) var(--pad);overflow:hidden;margin:0 var(--pad);border-radius:calc(var(--r)*1.4)}
+.visit>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card{position:relative;background:#f1f3ea;color:#12301f;border-radius:calc(var(--r)*1.2);width:min(560px,100%);padding:clamp(24px,4vw,40px);display:grid;gap:18px}
+.card h2{font-size:var(--step-head)}
+.card .tabs2{display:flex;gap:8px;flex-wrap:wrap}
+.card .chip{border-color:#c6d3c9;color:#12301f}
+.card .chip[aria-pressed=true]{background:#12301f;color:#f1f3ea;border-color:#12301f}
+.card .rows{display:grid;gap:10px;font-size:var(--step-body)}
+.card .live{display:inline-flex;gap:10px;align-items:center;font-weight:500}
+.card .live i{width:12px;height:12px;border-radius:50%;background:#18823f}
+.card .live.off i{background:#8a948e}
+.card .acts{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+.card .btn.line:hover{color:#18823f}
+
+/* reply card */
+.reply{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--pad);align-items:start}
+.reply .t{grid-column:1 / span 5}.reply .t h2{margin-bottom:20px}
+.reply form{grid-column:7 / span 6;display:grid;gap:10px;background:var(--surface);padding:clamp(24px,4vw,48px);border-radius:calc(var(--r)*1.2)}
+.reply label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.reply input[type=text],.reply input[type=tel],.reply select{width:100%;min-height:56px;border:0;background:var(--soft);color:var(--ink);padding:0 20px;font:400 var(--step-body) var(--font);border-radius:16px}
+.reply select option{background:#12301f}
+.reply input::placeholder{color:var(--muted)}
+.reply input:focus,.reply select:focus{outline:3px solid var(--accent);outline-offset:2px}
+.reply .agree{position:static;width:auto;height:auto;overflow:visible;clip-path:none;display:flex;gap:12px;align-items:flex-start;font-size:var(--step-small);line-height:1.4;cursor:pointer;margin:6px 0}
+.reply .agree input{width:22px;height:22px;margin-top:2px;accent-color:var(--paper);flex:none}
+.reply .err{min-height:1.2em;font-size:var(--step-small);color:var(--err)}
+.reply .ok{grid-column:7 / span 6;background:var(--surface);padding:clamp(24px,4vw,48px);display:grid;gap:12px;border-radius:calc(var(--r)*1.2)}
+.reply .ok[hidden]{display:none}
+@media (max-width:900px){.reply .t,.reply form,.reply .ok{grid-column:1 / -1}}
+
+/* footer */
+.ft{padding-top:clamp(56px,8vw,112px);padding-bottom:0;overflow:hidden}
+.ft-g{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;font-size:var(--step-small);line-height:1.6;margin-bottom:56px}
+@media (max-width:900px){.ft-g{grid-template-columns:1fr 1fr}}
+.ft h4{margin:0 0 10px;font:500 var(--step-body) var(--font)}
+.ft a{display:block;padding:3px 0;text-decoration:none}.ft a:hover{text-decoration:underline}
+.ft .word{font:400 clamp(9rem,5rem + 36vw,40rem)/.74 var(--font-display);letter-spacing:-.04em;margin:0 -.04em -.06em;transform-origin:left bottom}
+.fine{padding-top:24px;padding-bottom:28px;color:var(--muted);font-size:var(--step-small);display:grid;gap:8px}
+.fine a{text-decoration:underline}
+
+@media (max-width:900px){
+  .ph{height:50svh}
+  .hdr nav{display:none;position:absolute;left:0;right:0;top:100%;background:var(--bg);flex-direction:column;padding:8px var(--pad) 20px;margin:0}
+  .nav-open .hdr nav{display:flex}.hdr nav a{padding:16px 6px;background:none;font-size:var(--step-lead)}
+  .burger{display:inline-flex!important;margin-left:auto}
+  .band{grid-template-columns:1fr;min-height:0;padding-top:16px}
+  .mark{grid-column:1;font-size:clamp(6rem,38vw,12rem)}
+  .side{grid-column:1}
+  .big,.visit{margin:0 var(--pad)}
+  .place,.place.r{display:grid}
+  .place .im,.place.r .im{grid-column:1 / -1;order:1}.place .tx,.place.r .tx{grid-column:1 / -1;order:2}
+  .tm .sm{display:none}
+}
+.mbar{display:none!important}
+.skip{position:absolute;left:12px;top:-60px;background:#fff;color:#000;padding:10px 16px;border-radius:8px;z-index:100}.skip:focus{top:12px}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">К содержимому</a>
+
+<header class="hero">
+  <div class="ph" id="ph">
+    <div class="hdr pad">
+      <a class="logo" href="#" aria-label="EMS — на главную"><img id="logo" alt="EMS Family Clinic, 30 лет" width="150" height="52"></a>
+      <nav id="nav" aria-label="Основное"><a href="#places">Клиники</a><a href="#departments">Отделения</a><a href="#doctors">Врачи</a><a href="#prices">Цены</a><a href="#reviews">Отзывы</a></nav>
+      <button class="ib" data-search type="button">Найти</button>
+      <button class="ib" data-theme-toggle type="button" aria-label="Включить светлую тему"></button>
+      <button class="ib burger" data-nav-toggle aria-expanded="false" aria-controls="nav" type="button">Меню</button>
+    </div>
+    <div class="tabs" role="group" aria-label="Выберите клинику" id="tabs"></div>
+  </div>
+  <div class="band pad">
+    <h1 class="mark" id="mark"><span class="sr">Семейная клиника </span>EMS</h1>
+    <div class="side">
+      <p class="lead">От планирования беременности до активного долголетия. Две клиники в Санкт-Петербурге.</p>
+      <div class="mini" id="mini"></div>
+      <div class="acts"><button class="btn" data-book type="button">Записаться на приём</button><a class="btn line" href="tel:+78127777703">8 (812) 777-77-03</a></div>
+    </div>
+  </div>
+  <div class="svcs pad"><h2 class="sr">Услуги клиники</h2><div class="chipset" id="svcs"></div></div>
+</header>
+
+<div class="sbar" id="sbar" inert>
+  <a class="logo" href="#" aria-label="EMS — наверх"><img id="logo2" alt="EMS Family Clinic" width="110" height="40"></a>
+  <nav aria-label="Быстрый переход"><a href="#places">Клиники</a><a href="#doctors">Врачи</a><a href="#prices">Цены</a><a href="#reviews">Отзывы</a><a href="#visit">Как найти</a></nav>
+  <div class="sp"><button class="ib" data-search type="button">Найти</button><button class="ib" data-theme-toggle type="button" aria-label="Включить светлую тему"></button><a class="ib tel" href="tel:+78127777703">8 (812) 777-77-03</a><button class="btn" data-book type="button">Записаться</button></div>
+</div>
+
+<main id="main">
+  <section class="sec pad" id="places">
+    <h2 class="sr">Две клиники</h2>
+    <div id="pl"></div>
+  </section>
+
+  <section class="sec pad dep" id="departments">
+    <h2>Отделения клиники</h2>
+    <ul id="dep"></ul>
+  </section>
+
+  <section class="big" aria-label="EMS в цифрах">
+    <img src="0752ca-saint-petersburg-moskovsky-victory-park.jpg" alt="Пруд в Московском парке Победы" loading="lazy" width="1920" height="1440">
+    <div class="scrim"></div>
+    <div class="in pad" id="nums"></div>
+  </section>
+
+  <section class="sec pad" id="doctors">
+    <div class="docs">
+      <aside class="sticky" aria-hidden="true"><div class="fr"><img id="sp" alt="" width="600" height="800"></div><div class="nm" id="sn"></div><div class="rl" id="sr"></div></aside>
+      <div>
+        <h2>141 врач</h2>
+        <div class="d-tools"><div class="search"><label class="sr" for="dq">Поиск врача</label><input id="dq" type="search" placeholder="Фамилия или специальность" autocomplete="off"></div><label class="sr" for="dg">Направление</label><select class="sel" id="dg"></select></div>
+        <div class="d-tools" id="dc" role="group" aria-label="Клиника"></div>
+        <p class="cn" id="dn" aria-live="polite" style="margin-bottom:12px"></p>
+        <div class="dl" id="dl"></div>
+        <p class="d-empty" id="de" hidden>Никого не нашли. Позвоните 8 (812) 777-77-03 — подскажем врача.</p>
+        <div class="more"><button class="btn" id="dm" type="button">Показать ещё</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec pad" id="prices">
+    <h2>Цены по акциям</h2>
+    <div class="menu" id="menu"></div>
+    <p class="untl" id="until"></p>
+  </section>
+
+  <section class="sec pad" id="reviews">
+    <h2 class="sr">Отзывы пациентов</h2>
+    <div class="tm">
+      <div class="pt"><img id="tp" alt="" width="600" height="800"></div>
+      <div class="q"><blockquote id="tq" aria-live="polite"></blockquote>
+        <div class="ctrl"><button class="cb" id="tprev" type="button" aria-label="Предыдущий отзыв">←</button><span class="n" id="tn"></span><button class="cb" id="tnext" type="button" aria-label="Следующий отзыв">→</button></div>
+        <p style="margin-top:24px"><a href="https://www.emsclinic.ru/about" target="_blank" rel="noopener">Все отзывы на сайте клиники</a></p></div>
+      <div class="sm"><img src="udelny-park-panoramio.jpg" alt="Удельный парк" loading="lazy" width="400" height="400"></div>
+    </div>
+  </section>
+
+  <section class="visit" id="visit" aria-labelledby="vh">
+    <img id="vimg" src="udelny-park-panoramio.jpg" alt="" loading="lazy" width="1920" height="1280">
+    <div class="card"><h2 id="vh">Как нас найти</h2><div class="tabs2" id="v-tabs" role="group" aria-label="Клиника"></div><div class="rows" id="v-rows"></div><div class="acts" id="v-acts"></div></div>
+  </section>
+
+  <section class="sec pad" id="contact">
+    <div class="reply">
+      <div class="t"><h2>Перезвоним вам</h2><p>Администратор подберёт врача и время. Колл-центр: 8 (812) 777-77-03, круглосуточно.</p></div>
+      <form id="cf" novalidate>
+        <label for="cf-n">Имя</label><input id="cf-n" name="name" type="text" placeholder="Имя" autocomplete="name"><div class="err" data-e="name"></div>
+        <label for="cf-p">Телефон</label><input id="cf-p" name="phone" type="tel" placeholder="Телефон" autocomplete="tel" inputmode="tel"><div class="err" data-e="phone"></div>
+        <label for="cf-s">Направление</label><select id="cf-s" name="spec"><option value="">Направление (если знаете)</option></select>
+        <label class="agree"><input type="checkbox" name="agree"><span>Согласен(на) на обработку персональных данных</span></label><div class="err" data-e="agree"></div>
+        <button class="btn" type="submit">Жду звонка</button>
+      </form>
+      <div class="ok" id="cf-ok" hidden><h2>Заявка принята</h2><p id="cf-ok-t"></p><p class="cn">Это прототип: данные никуда не отправляются.</p></div>
+    </div>
+  </section>
+</main>
+
+<footer class="ft pad">
+  <div class="ft-g">
+    <div><h4>EMS Family Clinic</h4>Многопрофильная семейная клиника с превентивным подходом<a href="tel:+78127777703">8 (812) 777-77-03</a><a href="mailto:zabota@emsclinic.ru">zabota@emsclinic.ru</a></div>
+    <div id="ft-c1"></div><div id="ft-c2"></div>
+    <div><h4>Пациентам</h4><a href="https://www.emsclinic.ru/for-patients" target="_blank" rel="noopener">Информация для пациентов</a><a href="https://www.emsclinic.ru/deposit" target="_blank" rel="noopener">Депозитный договор</a><a href="https://www.emsclinic.ru/partners/insurance-companies" target="_blank" rel="noopener">Страховым компаниям</a><a href="https://www.emsclinic.ru/vacancies" target="_blank" rel="noopener">Работа в EMS</a></div>
+  </div>
+  <div class="word" id="word" aria-hidden="true">EMS</div>
+</footer>
+<div class="fine pad"><span>© 2026 ООО «Единые Медицинские Системы». Прототип дизайна, не является официальным сайтом.</span><span>Фотографии парков: <a href="https://commons.wikimedia.org/wiki/File:Saint_Petersburg._Moskovsky_Victory_Park.jpg">Bestalex</a>, <a href="https://commons.wikimedia.org/wiki/File:0752Ca._Saint_Petersburg._Moskovsky_Victory_Park.jpg">Александровы АГ</a>, <a href="https://commons.wikimedia.org/wiki/File:Udelny_Park_-_panoramio.jpg">Udelny Park</a>, CC BY-SA 4.0, Wikimedia Commons. Фото врачей — emsclinic.ru.</span></div>
+
+<script src="ems-data.js"></script>
+<script src="shared.js?v=6"></script>
+<script>
+(function(){
+  var E=window.EMS,$=function(id){return document.getElementById(id)},doc=E.doctor;
+  $('logo').src=E.logo;$('logo2').src=E.logo;
+  var cn={udelnaya:'Энгельса',pobedy:'Победы'},cur='pobedy';
+  var PIC={pobedy:{src:'saint-petersburg-moskovsky-victory-park.jpg',alt:'Здание у метро «Парк Победы» в Московском парке Победы',pos:'60% 40%'},udelnaya:{src:'udelny-park-panoramio.jpg',alt:'Удельный парк',pos:'50% 50%'}};
+
+  /* фото места в шапке: выбор клиники — выбор района */
+  var ph=$('ph');
+  Object.keys(PIC).forEach(function(k){var im=document.createElement('img');im.dataset.k=k;im.src=PIC[k].src;im.alt=PIC[k].alt;im.style.objectPosition=PIC[k].pos;im.width=1920;im.height=1280;if(k!=='pobedy')im.loading='lazy';ph.insertBefore(im,ph.firstChild)});
+  function tabsHtml(){return E.clinics.map(function(c){var s=E.status(c.id);return '<button class="tab'+(s.open?' open':'')+'" type="button" data-cl="'+c.id+'" aria-pressed="'+(c.id===cur)+'"><i></i>'+c.name+'</button>'}).join('')}
+  function setClinic(id,fromHero){
+    cur=id;
+    [].forEach.call(ph.querySelectorAll('img'),function(im){im.classList.toggle('on',im.dataset.k===id)});
+    $('tabs').innerHTML=tabsHtml();
+    $('v-tabs').innerHTML=E.clinics.map(function(c){return '<button class="chip" type="button" data-cl="'+c.id+'" aria-pressed="'+(c.id===cur)+'">'+c.name.replace('EMS ','')+'</button>'}).join('');
+    drawVisit();
+    state.clinic=id;state.shown=PAGE;
+    [].forEach.call($('dc').children,function(x){x.setAttribute('aria-pressed',x.dataset.c===id)});
+    draw();
+  }
+  document.addEventListener('click',function(e){var b=e.target.closest('[data-cl]');if(b&&b.closest('#tabs,#v-tabs'))setClinic(b.dataset.cl)});
+
+  /* два места */
+  $('pl').innerHTML=E.clinics.map(function(c,i){var k=c.id;return '<article class="place'+(i?' r':'')+'"><div class="im"><img loading="lazy" src="'+PIC[k].src+'" alt="'+PIC[k].alt+'" width="1920" height="1280"></div><div class="tx"><h3>'+c.name+'</h3><div class="meta"><span>'+c.address+', Санкт-Петербург</span><span>'+c.district+(c.metro?', '+c.metro:'')+'</span><span class="live" data-live="'+k+'"></span><span>'+c.trauma+'</span></div><div class="acts"><button class="btn" data-book data-clinic="'+k+'" type="button">Записаться сюда</button><a class="btn line" href="'+c.map+'" target="_blank" rel="noopener">Как добраться</a></div></div></article>'}).join('');
+  function live(){[].forEach.call(document.querySelectorAll('[data-live]'),function(el){var s=E.status(el.dataset.live);el.className='live'+(s.open?'':' off');el.innerHTML='<i></i>'+(s.open?'Сейчас открыто, до 22:00':'Сейчас закрыто, откроется в 8:00')});$('tabs').innerHTML=tabsHtml();drawVisit();drawMini()}
+
+  function drawMini(){$('mini').innerHTML=E.clinics.map(function(c){var s=E.status(c.id);return '<div class="mc"><b>'+c.name+'</b><span>'+c.address+(c.metro?', '+c.metro:'')+'</span><span class="live'+(s.open?'':' off')+'"><i></i>'+(s.open?'Открыто до 22:00':'Откроется в 8:00')+'</span><span>'+c.trauma+'</span></div>'}).join('')}
+  $('svcs').innerHTML=E.services.map(function(s){return '<button class="chip'+(s.urgent?' hot':'')+'" type="button" data-book="'+E.esc(s.spec)+'">'+s.t+'</button>'}).join('');
+  var sbar=$('sbar');
+  function sb(){var on=window.scrollY>$('ph').offsetHeight+40;sbar.classList.toggle('show',on);sbar.inert=!on}
+  window.addEventListener('scroll',sb,{passive:true});sb();
+
+  /* отделения на Победы, 17 — руководители с сайта */
+  var DEP=[['orehova-ekaterina-konstantinovna','Акушерство и гинекология','Акушерство и гинекология'],['kostyukevich-andrey-vladimirovich','Неврология и восстановительная медицина','Неврология'],['hlebnikov-danil-nikolaevich','Педиатрия','Педиатрия'],['kvernadze-vladimir-semenovich','Стоматология','Стоматология'],['hapchaev-ruslan-talasovich','Офтальмология','Офтальмология'],['ustimova-vera-nikolaevna','Превентивная медицина и долголетие','Превентивная медицина']];
+  $('dep').innerHTML=DEP.map(function(d){var x=doc(d[0]);return x?'<li><button type="button" data-book="'+E.esc(d[2])+'" data-doctor="'+E.esc(x.n)+'"><img loading="lazy" src="'+x.photo+'" alt="'+E.esc(x.n)+'" width="160" height="200"><div><b>'+d[1]+'</b><span>'+x.n+'</span></div><span class="go">Записаться</span></button></li>':''}).join('');
+
+  /* цифры на фотографии */
+  var S=E.stats;
+  $('nums').innerHTML='<div class="main">'+(S[0].pre||'')+'<span data-count="'+S[0].n+'" style="font:inherit;letter-spacing:inherit">'+S[0].v+'</span></div><div class="row"><div><b></b><span>приёмов в год</span></div>'+S.slice(1).map(function(s){return '<div><b>'+s.v+'</b><span>'+s.t+'</span></div>'}).join('')+'</div>';
+  $('nums').querySelector('.row div').remove();
+
+  /* врачи с липким портретом */
+  var state={clinic:'pobedy',g:'all',q:'',shown:12},PAGE=12;
+  $('dg').innerHTML='<option value="all">Все направления</option>'+E.groups.map(function(g){return '<option value="'+E.esc(g.g)+'">'+g.g+' — '+g.n+'</option>'}).join('');
+  $('dc').innerHTML=[['all','Обе клиники'],['udelnaya','Энгельса'],['pobedy','Победы']].map(function(c){return '<button class="chip" type="button" data-c="'+c[0]+'" aria-pressed="'+(c[0]===state.clinic)+'">'+c[1]+'</button>'}).join('');
+  function match(d){if(state.clinic!=='all'&&d.c.indexOf(state.clinic)<0)return false;if(state.g!=='all'&&d.g!==state.g)return false;if(state.q&&(d.n+' '+d.r+' '+d.g).toLowerCase().indexOf(state.q)<0)return false;return true}
+  function sticky(d){if(!d)return;var im=$('sp');im.style.opacity=.2;im.onload=function(){im.style.opacity=1};im.src=d.photo;im.alt='';$('sn').textContent=d.n;$('sr').textContent=d.r.length>90?d.r.slice(0,90)+'…':d.r}
+  function draw(){
+    var list=E.doctors.filter(match);$('dn').textContent='Найдено: '+list.length;$('de').hidden=list.length>0;
+    $('dl').innerHTML=list.slice(0,state.shown).map(function(d,i){return '<article class="dr" data-u="'+d.u+'" tabindex="0"><b>'+d.n+'</b><button class="go" type="button" data-book="'+E.esc(d.g)+'" data-doctor="'+E.esc(d.n)+'" data-clinic="'+(d.c.length===1?d.c[0]:'')+'">Записаться</button><p>'+E.esc(d.r)+' · '+d.c.map(function(c){return cn[c]}).join(', ')+'</p></article>'}).join('');
+    $('dm').hidden=list.length<=state.shown;if(!$('dm').hidden)$('dm').textContent='Показать ещё '+Math.min(PAGE,list.length-state.shown);
+    sticky(list[0]);
+  }
+  $('dl').addEventListener('mouseover',function(e){var r=e.target.closest('.dr');if(r)sticky(doc(r.dataset.u))});
+  $('dl').addEventListener('focusin',function(e){var r=e.target.closest('.dr');if(r)sticky(doc(r.dataset.u))});
+  $('dc').addEventListener('click',function(e){var b=e.target.closest('[data-c]');if(!b)return;state.clinic=b.dataset.c;state.shown=PAGE;[].forEach.call(this.children,function(x){x.setAttribute('aria-pressed',x===b)});draw()});
+  $('dg').addEventListener('change',function(){state.g=this.value;state.shown=PAGE;draw()});
+  $('dq').addEventListener('input',function(){state.q=this.value.trim().toLowerCase();state.shown=PAGE;draw()});
+  $('dm').addEventListener('click',function(){state.shown+=PAGE;draw()});
+
+  /* меню цен */
+  $('menu').innerHTML=['udelnaya','pobedy'].map(function(id){var c=E.clinic(id);return '<div><h3>'+c.name+'</h3><ul>'+E.promos.filter(function(p){return p.cl.indexOf(id)>-1}).map(function(p){var pr=p.now?p.now+' ₽'+(p.was?'<s>вместо '+p.was+' ₽</s>':(p.gain?'<s>'+p.gain+'</s>':'')):(p.off||p.gain||'');return '<li><button type="button" data-book="'+E.esc(p.spec)+'" data-clinic="'+id+'"><span>'+E.esc(p.t)+'</span><span class="pr">'+pr+'</span></button></li>'}).join('')+'</ul></div>'}).join('');
+  $('until').textContent='Акции действуют до '+E.promoUntil+'. Цены и условия — на сайте клиники.';
+
+  /* отзыв */
+  var ri=0;
+  function rev(d){ri=(ri+d+E.reviews.length)%E.reviews.length;var r=E.reviews[ri],dd=doc(r.u);
+    $('tq').innerHTML='<div class="fade"><p>«'+E.esc(r.t)+'»</p>'+(r.t2?'<p>'+E.esc(r.t2)+'</p>':'')+'<cite>'+E.esc(r.a)+'<span>О докторе: '+E.esc(r.d)+'</span></cite></div>';
+    $('tn').textContent=(ri+1)+' / '+E.reviews.length;if(dd){$('tp').src=dd.photo;$('tp').alt=dd.n}}
+  $('tprev').onclick=function(){rev(-1)};$('tnext').onclick=function(){rev(1)};rev(0);
+
+  /* карточка визита */
+  function drawVisit(){
+    var c=E.clinic(cur),s=E.status(cur);
+    $('vimg').src=PIC[cur].src;$('vimg').alt='';
+    $('v-rows').innerHTML='<span><b>'+c.name+'</b></span><span>'+c.address+', Санкт-Петербург<br>'+c.district+(c.metro?', '+c.metro:'')+'</span><span class="live'+(s.open?'':' off')+'"><i></i>'+(s.open?'Сейчас открыто, до 22:00':'Сейчас закрыто, откроется в 8:00')+'</span><span>'+c.hours+'<br>'+c.trauma+'</span><span>Колл-центр круглосуточно: <a href="tel:+78127777703">8 (812) 777-77-03</a></span>';
+    $('v-acts').innerHTML='<button class="btn" data-book data-clinic="'+c.id+'" type="button">Записаться сюда</button><a class="btn line" href="'+c.map+'" target="_blank" rel="noopener">Как добраться</a>';
+  }
+
+  /* форма */
+  var sel=$('cf-s');E.specialties.adult.concat(E.specialties.child).forEach(function(s){var o=document.createElement('option');o.textContent=s;sel.appendChild(o)});
+  var cf=$('cf'),cph=cf.phone;
+  cph.addEventListener('input',function(){var d=cph.value.replace(/\D/g,'');if(!d){cph.value='';return}if(d[0]==='8')d='7'+d.slice(1);if(d[0]!=='7')d='7'+d;d=d.slice(0,11);var o='+7';if(d.length>1)o+=' ('+d.slice(1,4);if(d.length>=4)o+=')';if(d.length>4)o+=' '+d.slice(4,7);if(d.length>7)o+='-'+d.slice(7,9);if(d.length>9)o+='-'+d.slice(9,11);cph.value=o});
+  cf.addEventListener('submit',function(e){e.preventDefault();var ok=true,fd=new FormData(cf);cf.querySelectorAll('.err').forEach(function(x){x.textContent=''});
+    function bad(k,m){cf.querySelector('[data-e='+k+']').textContent=m;ok=false}
+    if((fd.get('name')||'').trim().length<2)bad('name','Введите имя.');
+    if((fd.get('phone')||'').replace(/\D/g,'').length!==11)bad('phone','Введите телефон полностью — 11 цифр.');
+    if(!fd.get('agree'))bad('agree','Нужно согласие на обработку данных.');
+    if(!ok)return;cf.hidden=true;$('cf-ok').hidden=false;$('cf-ok-t').textContent=fd.get('name').trim()+', мы перезвоним по номеру '+fd.get('phone')+'.'});
+
+  [['ft-c1',0],['ft-c2',1]].forEach(function(x){var c=E.clinics[x[1]];$(x[0]).innerHTML='<h4>'+c.name+'</h4>'+c.address+'<br>'+c.district+'<br>'+c.hours+'<br>'+c.trauma});
+
+  /* знак на прокрутке: EMS сжимается, когда уходит первый экран, и вырастает у подвала */
+  var mark=$('mark'),word=$('word'),reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function onScroll(){
+    if(reduce)return;
+    var y=window.scrollY,vh=window.innerHeight;
+    mark.style.transform='scale('+(1-Math.min(.06,y/vh*.06))+')';
+    var r=word.getBoundingClientRect(),p=Math.max(0,Math.min(1,(vh-r.top)/(vh*.6)));
+    word.style.transform='scale('+(.94+.06*p)+')';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  setClinic('pobedy');live();setInterval(live,30000);
+})();
+</script>
+</body>
+</html>
