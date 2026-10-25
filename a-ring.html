@@ -59,6 +59,7 @@ h1,h2,h3{margin:0;font-family:var(--font-display);font-weight:var(--display-weig
 h2{font-size:var(--step-head)}
 p{margin:0;max-width:62ch}
 .sec{padding:clamp(72px,10vw,160px) 0}
+@media (max-width:900px){.sec{padding:52px 0}}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:0 32px;border-radius:var(--radius);border:0;background:var(--action);color:var(--action-ink);font:500 var(--step-body)/1 var(--font);text-decoration:none;cursor:pointer;transition:transform .2s ease,background .2s ease}
 .btn:hover{background:#c92621}.btn:active{transform:scale(.97)}
 .btn.ghost{background:transparent;color:var(--ink);padding:0 4px;min-height:48px;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
@@ -106,7 +107,7 @@ p{margin:0;max-width:62ch}
 .legend div{display:flex;gap:12px;align-items:center}
 .legend i{flex:none;width:18px;height:18px;border-radius:50%}
 @media (max-width:900px){
-  .hero{min-height:0}.hero-in{min-height:0;padding-bottom:0}
+  .hero{min-height:0;padding-bottom:36px}.hero-in{min-height:0;padding-bottom:0}
   .dial{position:relative;top:auto;right:auto;transform:none;width:min(92vw,560px);margin:40px auto 72px;left:0}
   .dial .center{padding:24%}
   .dial .state{position:absolute;top:calc(100% + 12px);left:0;right:0}
@@ -192,12 +193,12 @@ p{margin:0;max-width:62ch}
 .search input:focus,.sel:focus{outline:3px solid var(--focus);outline-offset:2px}
 .dl{display:grid;grid-template-columns:1fr 1fr;column-gap:64px;row-gap:36px}
 @media (max-width:900px){.dl{grid-template-columns:1fr}}
-.dc{display:grid;grid-template-columns:72px 1fr;gap:20px;align-items:start}
+.dc{display:grid;grid-template-columns:72px minmax(0,1fr);gap:20px;align-items:start}
 .dc[hidden]{display:none}
 .dc .ph{width:72px;height:72px;border-radius:50%;object-fit:cover;object-position:top;background:var(--soft)}
 .dc b{display:block;font-weight:500;font-size:var(--step-body);line-height:1.25}
 .dc p{margin-top:4px;font-size:var(--step-small);line-height:1.4;color:var(--muted);max-width:40ch}
-.dc .meta{display:flex;gap:18px;align-items:center;margin-top:10px;font-size:var(--step-small)}
+.dc .meta{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;margin-top:10px;font-size:var(--step-small)}
 .dc .meta a,.dc .meta button{background:none;border:0;padding:10px 0;cursor:pointer;color:var(--accent);font:500 var(--step-small) var(--font);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:2px}
 .dc .meta span{color:var(--muted)}
 .more{display:flex;justify-content:center;margin-top:56px}
@@ -217,7 +218,7 @@ p{margin:0;max-width:62ch}
 .pl .pr{font:500 var(--step-lead)/1 var(--font-display);letter-spacing:-.03em;white-space:nowrap;text-align:right}
 .pl .pr s{display:block;font:400 var(--step-small) var(--font);opacity:.65;letter-spacing:0;margin-top:4px}
 .until{font-size:var(--step-small);color:var(--muted)}
-@media (max-width:900px){.promo{grid-template-columns:1fr;min-height:0}.pf.l,.pf.r{padding-left:var(--gut);padding-right:var(--gut)}}
+@media (max-width:900px){.promo{grid-template-columns:minmax(0,1fr);min-height:0}.pl button{grid-template-columns:minmax(0,1fr) auto}.pl .tt{overflow-wrap:anywhere}.pf.l,.pf.r{padding-left:var(--gut);padding-right:var(--gut)}}
 
 /* clinics */
 .cl{background:var(--field-sage)}
@@ -422,7 +423,7 @@ p{margin:0;max-width:62ch}
 </footer>
 
 <script src="ems-data.js"></script>
-<script src="shared.js?v=7"></script>
+<script src="shared.js?v=11"></script>
 <script>
 (function(){
   var E=window.EMS,$=function(id){return document.getElementById(id)};

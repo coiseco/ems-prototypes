@@ -120,7 +120,7 @@ p{margin:0;max-width:var(--measure)}
 .sel option{background:var(--bg);color:var(--ink)}
 .chip{min-height:48px;padding:0 20px;border-radius:var(--radius);border:2px solid var(--line);background:none;cursor:pointer;font:500 var(--step-small) var(--font);transition:background .2s,color .2s}
 .chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.dl{display:grid;gap:6px}
+.dl{display:grid;gap:6px;grid-template-columns:minmax(0,1fr)}
 .dr{border-radius:var(--r);display:grid;grid-template-columns:84px 1fr auto;gap:4px 18px;align-items:center;padding:14px 18px;background:var(--surface)}
 .dr[hidden]{display:none}
 .dr img{border-radius:14px;width:84px;height:112px;object-fit:cover;object-position:top;background:var(--soft);grid-row:span 2}
@@ -146,7 +146,7 @@ p{margin:0;max-width:var(--measure)}
 @media (max-width:560px){.pt .cn{display:none}}
 
 /* letter */
-.letter p{max-width:34em;font-size:var(--step-lead);line-height:1.35;letter-spacing:-.02em}
+.letter p{max-width:none;font-size:clamp(1.25rem,1rem + .9vw,1.5rem);line-height:1.35;letter-spacing:-.02em}
 .letter p+p{margin-top:20px;font-size:var(--step-body);line-height:1.5;max-width:var(--measure)}
 .letter cite{display:block;margin-top:32px;font-style:normal}
 .letter cite span{display:block;color:var(--muted);font-size:var(--step-small)}
@@ -155,6 +155,9 @@ p{margin:0;max-width:var(--measure)}
 .cb:hover{filter:brightness(1.15)}.cb:active{transform:scale(.94)}
 .letter .n{min-width:60px;text-align:center;color:var(--muted)}
 .letter .fade{animation:fq .6s ease}
+#lt{background:var(--surface);border-radius:calc(var(--r)*1.3);padding:clamp(24px,4vw,44px)}
+.rvp{display:none}
+.letter cite b{font-weight:500}
 @keyframes fq{from{opacity:0}}
 
 /* contact strip */
@@ -188,6 +191,13 @@ p{margin:0;max-width:var(--measure)}
   .hero{min-height:0;padding-top:48px}
   .stg{min-height:0}
   .mos{grid-template-columns:1fr}
+  .sec{padding-top:44px;padding-bottom:44px}
+  .rvp{display:block;width:84px;height:112px;object-fit:cover;object-position:top;border-radius:14px;margin-bottom:20px}
+  .stg ul,.rows ul{grid-template-columns:minmax(0,1fr)}
+  .stg li button,.rows li button{padding:16px 18px;font-size:var(--step-small);overflow-wrap:anywhere}
+  .stg li .pr{white-space:normal;text-align:right;max-width:9em}
+  .pt td,.pt th{font-size:var(--step-small)}.pt button{overflow-wrap:anywhere}.pt td.p{white-space:normal}
+  .dr{grid-template-columns:72px minmax(0,1fr)}
 }
 .mbar{display:none!important}
 .skip{position:absolute;left:12px;top:-60px;background:#fff;color:#000;padding:10px 16px;border-radius:8px;z-index:100}.skip:focus{top:12px}
@@ -263,7 +273,7 @@ p{margin:0;max-width:var(--measure)}
 </div>
 
 <script src="ems-data.js"></script>
-<script src="shared.js?v=7"></script>
+<script src="shared.js?v=11"></script>
 <script>
 (function(){
   var E=window.EMS,$=function(id){return document.getElementById(id)};
@@ -347,7 +357,7 @@ p{margin:0;max-width:var(--measure)}
   function rev(d){
     ri=(ri+d+E.reviews.length)%E.reviews.length;var r=E.reviews[ri];
     var dd=doc(r.u);
-    $('lt').innerHTML='<div class="fade"><p>«'+E.esc(r.t)+'»</p>'+(r.t2?'<p>'+E.esc(r.t2)+'</p>':'')+'<cite>'+E.esc(r.a)+'<span>О докторе: '+E.esc(r.d)+'</span></cite></div>';
+    $('lt').innerHTML='<div class="fade">'+(dd?'<img class="rvp" src="'+dd.thumb+'" alt="'+E.esc(dd.n)+'" width="84" height="112">':'')+'<p>«'+E.esc(r.t)+'»</p>'+(r.t2?'<p>'+E.esc(r.t2)+'</p>':'')+'<cite>'+E.esc(r.a)+'<span>О докторе: '+E.esc(r.d)+'</span></cite></div>';
     $('ln').textContent=(ri+1)+' / '+E.reviews.length;
     var im=stage.querySelector('[data-k=review]');if(im&&dd){im.src=dd.photo;im.alt=dd.n}
   }

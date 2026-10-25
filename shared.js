@@ -164,7 +164,7 @@
 
   /* ---------- injected styles (use page tokens) ---------- */
   var css = '' +
-    '[hidden]{display:none!important}section[id]{scroll-margin-top:96px}html{scroll-behavior:smooth}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.01ms!important;transition-duration:.01ms!important}}' +
+    '[hidden]{display:none!important}button{white-space:normal}section[id]{scroll-margin-top:96px}html{scroll-behavior:smooth}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.01ms!important;transition-duration:.01ms!important}}' +
     'html.a11y-big{font-size:118%}' +
     '.js [data-reveal]{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}.js [data-reveal].in{opacity:1;transform:none}' +
     '.ems-dlg{border:0;padding:0;overflow:auto;border-radius:var(--dlg-r,24px);background:var(--bg,#fff);color:var(--ink,#111);width:min(520px,calc(100vw - 24px));max-height:calc(100vh - 24px);box-shadow:0 30px 80px rgba(10,30,25,.35);font-family:var(--font,inherit)}' +

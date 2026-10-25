@@ -55,7 +55,7 @@ p{margin:0;max-width:56ch}
 /* hero */
 .hero{position:relative}
 .ph{position:relative;height:40svh;min-height:340px;overflow:hidden;background:#0b1c13;border-radius:0 0 calc(var(--r)*1.4) calc(var(--r)*1.4)}
-.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.4s ease,transform 8s ease}
+.ph img{border-radius:inherit;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.4s ease,transform 8s ease}
 .ph img.on{opacity:1;transform:scale(1.04)}
 .hdr{position:absolute;left:0;right:0;top:0;z-index:5;display:flex;align-items:center;gap:8px;padding-top:14px;padding-bottom:14px}
 .hdr .logo img{height:52px;width:auto;opacity:1;position:static;transform:none}
@@ -154,8 +154,8 @@ p{margin:0;max-width:56ch}
 .sel option{background:var(--bg);color:var(--ink)}
 .chip{min-height:48px;padding:0 20px;border-radius:var(--radius);border:2px solid var(--line);background:none;cursor:pointer;font:500 var(--step-small) var(--font);transition:background .2s,color .2s}
 .chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.dl{display:grid;gap:6px}
-.dr{border-radius:var(--r);display:grid;grid-template-columns:1fr auto;gap:2px 16px;align-items:center;padding:16px 20px;background:var(--surface);cursor:default;transition:background .2s}
+.dl{display:grid;gap:6px;grid-template-columns:minmax(0,1fr)}
+.dr{border-radius:var(--r);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 16px;align-items:center;padding:16px 20px;background:var(--surface);cursor:default;transition:background .2s}
 .dr:hover,.dr:focus-within{background:var(--soft)}
 .dr[hidden]{display:none}
 .dr b{font-weight:500;line-height:1.2}
@@ -165,14 +165,14 @@ p{margin:0;max-width:56ch}
 .d-empty{color:var(--muted);padding:24px 0}
 .more{margin-top:32px}
 .cn{color:var(--muted);font-size:var(--step-small)}
-@media (max-width:900px){.docs{grid-template-columns:1fr}.sticky{display:none}}
+@media (max-width:900px){.docs{grid-template-columns:minmax(0,1fr)}.sticky{display:none}}
 
 /* menu prices */
 .menu{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,6vw,96px);margin-top:48px}
-@media (max-width:900px){.menu{grid-template-columns:1fr}}
+@media (max-width:900px){.menu{grid-template-columns:minmax(0,1fr)}.menu li button{overflow-wrap:anywhere}}
 .menu h3{font-size:var(--step-lead);margin-bottom:12px}
 .menu ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
-.menu li button{border-radius:var(--r);display:grid;grid-template-columns:1fr auto;gap:4px 24px;width:100%;padding:16px 20px;background:var(--surface);border:0;text-align:left;cursor:pointer;transition:background .2s}
+.menu li button{border-radius:var(--r);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 24px;width:100%;padding:16px 20px;background:var(--surface);border:0;text-align:left;cursor:pointer;transition:background .2s}
 .menu li button:hover{background:var(--soft)}
 .menu .pr{font:500 var(--step-lead)/1 var(--font);white-space:nowrap;text-align:right}
 .menu .pr s{display:block;font:400 var(--step-small) var(--font);color:var(--muted);margin-top:4px}
@@ -195,19 +195,22 @@ p{margin:0;max-width:56ch}
 @media (max-width:900px){.tm .pt{grid-column:1 / span 9}.tm .q{grid-column:1 / -1;margin-top:24px}.tm .sm{display:none}}
 
 /* visit card on a photograph */
-.visit{position:relative;display:grid;place-items:center;padding:clamp(32px,6vw,88px) var(--pad);overflow:hidden;margin:0 var(--pad);border-radius:calc(var(--r)*1.4)}
-.visit>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.card{position:relative;background:#f1f3ea;color:#12301f;border-radius:calc(var(--r)*1.2);width:min(560px,100%);padding:clamp(24px,4vw,40px);display:grid;gap:18px}
+
+.v-grid{display:grid;grid-template-columns:5fr 7fr;gap:var(--pad);align-items:stretch}
+.card{background:var(--surface);border-radius:calc(var(--r)*1.4);padding:clamp(24px,4vw,40px);display:grid;gap:18px;align-content:start}
 .card h2{font-size:var(--step-head)}
 .card .tabs2{display:flex;gap:8px;flex-wrap:wrap}
-.card .chip{border-color:#c6d3c9;color:#12301f}
-.card .chip[aria-pressed=true]{background:#12301f;color:#f1f3ea;border-color:#12301f}
-.card .rows{display:grid;gap:10px;font-size:var(--step-body)}
+.card .chip{border-color:var(--line)}
+.card .rows{display:grid;gap:12px;font-size:var(--step-body);line-height:1.45}
 .card .live{display:inline-flex;gap:10px;align-items:center;font-weight:500}
-.card .live i{width:12px;height:12px;border-radius:50%;background:#18823f}
+.card .live i{width:12px;height:12px;border-radius:50%;background:#7fe0a6}
+:root[data-theme=light] .card .live i{background:#18823f}
 .card .live.off i{background:#8a948e}
-.card .acts{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
-.card .btn.line:hover{color:#18823f}
+.card .acts{display:flex;gap:12px 24px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.v-map{position:relative;border-radius:calc(var(--r)*1.4);overflow:hidden;min-height:440px;background:var(--surface)}
+.v-map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+:root[data-theme=dark] .v-map iframe{filter:invert(.92) hue-rotate(180deg) brightness(.92) contrast(.9)}
+@media (max-width:900px){.v-grid{grid-template-columns:1fr}.v-map{min-height:320px}}
 
 /* reply card */
 .reply{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--pad);align-items:start}
@@ -238,7 +241,7 @@ p{margin:0;max-width:56ch}
 @media (max-width:900px){
   .ph{height:50svh}
   .hdr nav{display:none;position:absolute;left:0;right:0;top:100%;background:var(--bg);flex-direction:column;padding:8px var(--pad) 20px;margin:0}
-  .nav-open .hdr nav{display:flex}.hdr nav a{padding:16px 6px;background:none;font-size:var(--step-lead)}
+  .nav-open .ph{overflow:visible}.nav-open .hdr nav{display:flex;border-radius:0 0 var(--r) var(--r);box-shadow:0 20px 40px rgba(0,0,0,.35)}.hdr nav a{padding:16px 6px;background:none;color:var(--ink);font-size:var(--step-lead)}.hdr nav a:hover{background:var(--hover)}
   .burger{display:inline-flex!important;margin-left:auto}
   .band{grid-template-columns:1fr;min-height:0;padding-top:16px}
   .mark{grid-column:1;font-size:clamp(6rem,38vw,12rem)}
@@ -332,9 +335,11 @@ p{margin:0;max-width:56ch}
     </div>
   </section>
 
-  <section class="visit" id="visit" aria-labelledby="vh">
-    <img id="vimg" src="udelny-park-panoramio.jpg" alt="" loading="lazy" width="1920" height="1280">
-    <div class="card"><h2 id="vh">Как нас найти</h2><div class="tabs2" id="v-tabs" role="group" aria-label="Клиника"></div><div class="rows" id="v-rows"></div><div class="acts" id="v-acts"></div></div>
+  <section class="sec pad" id="visit" aria-labelledby="vh">
+    <div class="v-grid">
+      <div class="card"><h2 id="vh">Как нас найти</h2><div class="tabs2" id="v-tabs" role="group" aria-label="Клиника"></div><div class="rows" id="v-rows"></div><div class="acts" id="v-acts"></div></div>
+      <div class="v-map"><iframe id="vmap" title="Карта: расположение клиники" loading="lazy" referrerpolicy="no-referrer"></iframe></div>
+    </div>
   </section>
 
   <section class="sec pad" id="contact">
@@ -363,7 +368,7 @@ p{margin:0;max-width:56ch}
 <div class="fine pad"><span>© 2026 ООО «Единые Медицинские Системы». Прототип дизайна, не является официальным сайтом.</span><span>Фотографии парков: <a href="https://commons.wikimedia.org/wiki/File:Saint_Petersburg._Moskovsky_Victory_Park.jpg">Bestalex</a>, <a href="https://commons.wikimedia.org/wiki/File:0752Ca._Saint_Petersburg._Moskovsky_Victory_Park.jpg">Александровы АГ</a>, <a href="https://commons.wikimedia.org/wiki/File:Udelny_Park_-_panoramio.jpg">Udelny Park</a>, CC BY-SA 4.0, Wikimedia Commons. Фото врачей — emsclinic.ru.</span></div>
 
 <script src="ems-data.js"></script>
-<script src="shared.js?v=7"></script>
+<script src="shared.js?v=11"></script>
 <script>
 (function(){
   var E=window.EMS,$=function(id){return document.getElementById(id)},doc=E.doctor;
@@ -439,7 +444,7 @@ p{margin:0;max-width:56ch}
   /* карточка визита */
   function drawVisit(){
     var c=E.clinic(cur),s=E.status(cur);
-    $('vimg').src=PIC[cur].src;$('vimg').alt='';
+    var xy={pobedy:[59.8626,30.3233],udelnaya:[60.0182,30.3243]}[cur],mp=$('vmap'),u='https://www.openstreetmap.org/export/embed.html?bbox='+(xy[1]-.006)+','+(xy[0]-.0025)+','+(xy[1]+.006)+','+(xy[0]+.0025)+'&layer=mapnik&marker='+xy[0]+','+xy[1];if(mp.getAttribute('src')!==u)mp.setAttribute('src',u);
     $('v-rows').innerHTML='<span><b>'+c.name+'</b></span><span>'+c.address+', Санкт-Петербург<br>'+c.district+(c.metro?', '+c.metro:'')+'</span><span class="live'+(s.open?'':' off')+'"><i></i>'+(s.open?'Сейчас открыто, до 22:00':'Сейчас закрыто, откроется в 8:00')+'</span><span>'+c.hours+'<br>'+c.trauma+'</span><span>Колл-центр круглосуточно: <a href="tel:+78127777703">8 (812) 777-77-03</a></span>';
     $('v-acts').innerHTML='<button class="btn" data-book data-clinic="'+c.id+'" type="button">Записаться сюда</button><a class="btn line" href="'+c.map+'" target="_blank" rel="noopener">Как добраться</a>';
   }
