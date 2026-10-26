@@ -308,7 +308,7 @@ p{margin:0;max-width:56ch}
       <aside class="sticky" aria-hidden="true"><div class="fr"><img id="sp" alt="" width="600" height="800"></div><div class="nm" id="sn"></div><div class="rl" id="sr"></div></aside>
       <div>
         <h2>141 врач</h2>
-        <div class="d-tools"><div class="search"><label class="sr" for="dq">Поиск врача</label><input id="dq" type="search" placeholder="Фамилия или специальность" autocomplete="off"></div><label class="sr" for="dg">Направление</label><select class="sel" id="dg"></select></div>
+        <div class="d-tools"><div class="search"><label class="sr" for="dq">Поиск врача</label><input id="dq" type="search" placeholder="Поиск врача" autocomplete="off"></div><label class="sr" for="dg">Направление</label><select class="sel" id="dg"></select></div>
         <div class="d-tools" id="dc" role="group" aria-label="Клиника"></div>
         <p class="cn" id="dn" aria-live="polite" style="margin-bottom:12px"></p>
         <div class="dl" id="dl"></div>
@@ -476,5 +476,8 @@ p{margin:0;max-width:56ch}
   setClinic('pobedy');live();setInterval(live,30000);
 })();
 </script>
+<script src="gsap.min.js"></script><script src="ScrollTrigger.min.js"></script><script src="lenis.min.js"></script>
+<script>window.EMS_MOTION={hero:['.mark','.side .lead','.mini .mc','.side .acts','.svcs .chip'],reveal:['.place','.dep li','.big .row > div','.menu > div','.tm .pt','.tm .q','.card','.v-map','.reply .t','.reply form'],split:['main h2'],parallax:['.big > img']}</script>
+<script src="motion.js"></script>
 </body>
 </html>

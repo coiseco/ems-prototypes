@@ -232,7 +232,7 @@ p{margin:0;max-width:var(--measure)}
         <h2 class="giant" aria-label="Врачи">Врачи</h2>
         <p class="until cn" style="margin-bottom:24px">141 врач в двух клиниках. Фото и профили — как на сайте клиники.</p>
         <div class="d-tools">
-          <div class="search"><label class="sr" for="dq">Поиск врача</label><input id="dq" type="search" placeholder="Фамилия или специальность" autocomplete="off"></div>
+          <div class="search"><label class="sr" for="dq">Поиск врача</label><input id="dq" type="search" placeholder="Поиск врача" autocomplete="off"></div>
           <label class="sr" for="dg">Направление</label><select class="sel" id="dg"></select>
         </div>
         <div class="d-tools" id="dc" role="group" aria-label="Клиника"></div>
@@ -369,5 +369,8 @@ p{margin:0;max-width:var(--measure)}
   live();setInterval(live,30000);
 })();
 </script>
+<script src="gsap.min.js"></script><script src="ScrollTrigger.min.js"></script><script src="lenis.min.js"></script>
+<script>window.EMS_MOTION={hero:['.hero .sub','.hero .acts'],reveal:['.stg .lead','.stg ul','.stg .who','.rows li','.mos > div','.d-tools','.pt','#lt','.cell','.cta .acts'],split:['h1','main h2']}</script>
+<script src="motion.js"></script>
 </body>
 </html>
