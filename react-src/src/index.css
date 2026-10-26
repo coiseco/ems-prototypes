@@ -1,0 +1,19 @@
+@import "tailwindcss";
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+@theme {
+  --font-sans: "Onest", system-ui, sans-serif;
+  --font-display: "Unbounded", "Onest", system-ui, sans-serif;
+  --color-bg: var(--bg); --color-soft: var(--soft); --color-ink: var(--ink);
+  --color-muted: var(--muted); --color-line: var(--line);
+  --color-action: var(--action); --color-brand: var(--brand);
+}
+:root{--bg:#fff;--soft:#F4F1EB;--ink:#1A1915;--muted:#5F5B52;--line:#E2DED5;--action:#D8261C;--action-ink:#fff;
+  --brand:#1E6B57;--on-brand:#fff;--focus:#F3B8B3;--err:#B3261E;--radius:8px;--dlg-r:14px;
+  --font:"Onest",system-ui,sans-serif;--font-display:"Unbounded","Onest",system-ui,sans-serif;--display-weight:700;color-scheme:light}
+:root[data-theme="dark"]{--bg:#14130F;--soft:#1E1D18;--ink:#F4F1EB;--muted:#B5B0A3;--line:#3A382F;--brand:#58C29E;--on-brand:#0E1F18;--focus:#7A2D28;--err:#FF8A80;color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.55 var(--font);overflow-x:hidden}
+:focus-visible{outline:3px solid var(--action);outline-offset:3px}
+h1,h2,h3{font-family:var(--font-display);letter-spacing:-.02em;line-height:1.15;text-wrap:balance;margin:0;font-weight:700}
+:root[data-theme="dark"] .themebtn .sun{display:none}
+:root:not([data-theme="dark"]) .themebtn .moon{display:none}
+dialog{margin:auto}
