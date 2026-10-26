@@ -13,7 +13,7 @@
 :root[data-theme="dark"]{--bg:#14130F;--soft:#1E1D18;--ink:#F4F1EB;--muted:#B5B0A3;--line:#3A382F;--brand:#58C29E;--on-brand:#0E1F18;--focus:#7A2D28;--err:#FF8A80;color-scheme:dark}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.55 var(--font);overflow-x:hidden}
 :focus-visible{outline:3px solid var(--action);outline-offset:3px}
-h1,h2,h3{font-family:var(--font-display);letter-spacing:-.02em;line-height:1.15;text-wrap:balance;margin:0;font-weight:700}
+@layer base{h1,h2,h3{font-family:var(--font-display);letter-spacing:-.02em;line-height:1.15;text-wrap:balance;margin:0;font-weight:700}}
 :root[data-theme="dark"] .themebtn .sun{display:none}
 :root:not([data-theme="dark"]) .themebtn .moon{display:none}
 dialog{margin:auto}

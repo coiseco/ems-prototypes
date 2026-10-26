@@ -62,9 +62,9 @@ export default function Wizard() {
 
   const Opt = ({ t, s, onClick }: { t: string; s?: string; onClick: () => void }) => (
     <button type="button" onClick={onClick}
-      className="flex min-h-14 w-full items-center justify-between gap-3 rounded-lg border-[1.5px] border-line bg-bg px-4 py-3 text-left font-medium hover:border-ink">
+      className="group flex min-h-14 w-full items-center justify-between gap-3 rounded-lg border-[1.5px] border-line bg-bg px-4 py-3 text-left font-medium transition-[transform,border-color,background-color] duration-200 ease-out hover:border-ink hover:bg-soft active:scale-[0.98]">
       <span>{t}{s && <small className="block text-sm font-normal text-muted">{s}</small>}</span>
-      <span aria-hidden className="opacity-50" dangerouslySetInnerHTML={{ __html: EMS.icon("arrow", 18) }} />
+      <span aria-hidden className="opacity-50 transition-[transform,opacity] duration-200 group-hover:translate-x-1 group-hover:opacity-100" dangerouslySetInnerHTML={{ __html: EMS.icon("arrow", 18) }} />
     </button>
   );
 
@@ -125,8 +125,8 @@ export default function Wizard() {
                 ) : <p className="mt-3 text-muted">Администратор подберёт врача и время при записи.</p>}
                 <div className="mt-5 flex flex-wrap gap-2.5">
                   <button type="button" data-book={need.spec} data-clinic={clinic} data-doctor={doctor?.n ?? ""}
-                    className="inline-flex min-h-12 items-center rounded-lg bg-action px-6 font-semibold text-white hover:brightness-90">Записаться</button>
-                  <a href="#doctors" className="inline-flex min-h-12 items-center rounded-lg border-[1.5px] border-ink px-6 font-semibold">Все врачи</a>
+                    className="group inline-flex min-h-12 items-center gap-2 rounded-lg bg-action px-6 font-semibold text-white transition-[transform,filter,box-shadow] duration-200 hover:-translate-y-0.5 hover:brightness-95 hover:shadow-[0_10px_22px_-10px_rgba(216,38,28,0.75)] active:scale-[0.97]">Записаться</button>
+                  <a href="#doctors" className="inline-flex min-h-12 items-center rounded-lg border-[1.5px] border-ink px-6 font-semibold transition-[background-color,color,transform] duration-200 hover:bg-ink hover:text-bg active:scale-[0.97]">Все врачи</a>
                 </div>
                 <button type="button" onClick={reset} className="mt-3 min-h-11 text-muted underline underline-offset-4">Начать заново</button>
               </>
